@@ -24,7 +24,6 @@ local function saveWardrobe(name)
         name = name,
         appearance = appearance
     }
-    SetResourceKvp(wardrobeId, json.encode(wardrobe))
     return true
 end
 
@@ -52,10 +51,9 @@ local function getWardrobe()
     return options
 end
 
-local function openWardrobe(menu)
+local function openWardrobe()
     lib.registerContext({
         id = wardrobeId,
-        menu = menu,
         title = "Outfits",
         options = getWardrobe()
     })
@@ -64,7 +62,11 @@ end
 
 local function startChange(coords, options, i)
     local ped = cache.ped
-    local oldAppearance = fivemAppearance:getPedAppearance(ped)
+    local oldAppearance = {
+        model = GetEntityModel(ped),
+        tattoos = fivemAppearance:getPedTattoos(ped),
+        appearance = fivemAppearance:getPedAppearance(ped)
+    }
     SetEntityCoords(ped, coords.x, coords.y, coords.z-1.0)
     SetEntityHeading(ped, coords.w)
     Wait(250)
@@ -72,7 +74,11 @@ local function startChange(coords, options, i)
         if not appearance then return end
 
         ped = PlayerPedId()
-        local clothing = fivemAppearance:getPedAppearance(ped)
+        local clothing = {
+            model = GetEntityModel(ped),
+            tattoos = fivemAppearance:getPedTattoos(ped),
+            appearance = fivemAppearance:getPedAppearance(ped)
+        }
 
         if not lib.callback.await("ND_AppearanceShops:clothingPurchase", false, i, clothing) then
             fivemAppearance:setPlayerModel(oldAppearance.model)
@@ -155,7 +161,6 @@ lib.registerContext({
                     })
                 end
                 fivemAppearance:setPedAppearance(cache.ped, selected.appearance)
-                TriggerServerEvent("ND_AppearanceShops:updateAppearance", fivemAppearance:getPedAppearance(cache.ped))
             end
         },
         {
@@ -196,6 +201,14 @@ AddEventHandler("onResourceStop", function(resource)
     if resource ~= cache.resource then return end
     SetResourceKvp(wardrobeId, json.encode(wardrobe))
 end)
+
+
+RegisterNetEvent("ND_AppearanceShops:ApplyAppearance", function(clothing)
+    if clothing then
+        fivemAppearance:setPedAppearance(PlayerPedId(), clothing.appearance)
+    end
+end)
+
 
 exports("openWardrobe", openWardrobe)
 exports("createClothingStore", createClothingStore)

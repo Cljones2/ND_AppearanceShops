@@ -18,6 +18,7 @@ lib.callback.register("ND_AppearanceShops:clothingPurchase", function(src, store
     if clothing and type(clothing) == "table" then
         player.setMetadata("clothing", clothing)
     end
+
     player.notify({
         title = store.blip.label,
         description = ("Payment of $%d confirmed!"):format(price),
@@ -27,12 +28,9 @@ lib.callback.register("ND_AppearanceShops:clothingPurchase", function(src, store
     return true
 end)
 
-RegisterNetEvent("ND_AppearanceShops:updateAppearance", function(clothing)
-    local src = source
-    local player = NDCore.getPlayer(src)
-    if not player then return end
-
-    if clothing and type(clothing) == "table" then
-        player.setMetadata("clothing", clothing)
+AddEventHandler("NDCore:CharacterLoaded", function(player)
+    local clothing = player.getMetadata("clothing")
+    if clothing then
+        TriggerClientEvent("ND_AppearanceShops:ApplyAppearance", player.source, clothing)
     end
 end)
