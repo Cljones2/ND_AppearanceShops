@@ -7,13 +7,13 @@ local fivemAppearance = exports["fivem-appearance"]
 
 -- Define blocked items
 local blockedItems = {
-    hats = {19, 20, 21, 22, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 139, 140, 141, 142, 149, 160, 161, 170, 171, 172, 173, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233},
-    legs = {16, 17, 18, 19, 20, 21, 22, 23, 24, 131, 132, 135, 188, 189, 191, 192, 194},
-    bags = {9},
-    scarvesChains = {12, 16, 18, 20, 21, 22, 48, 132, 133, 135, 140, 153, 154, 155, 182, 183, 184, 185, 186, 187, 188, 189, 190},
-    shirts = {16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 80, 144, 151, 152, 153, 173, 175, 176, 177, 221, 222, 223, 224, 225, 226},
-    bodyArmor = {1, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 45, 46, 49, 83, 84, 85, 88, 89, 90, 91},
-    jackets = {16, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 40, 41, 42, 43, 45, 46, 47, 48, 49, 89, 253, 348, 349, 350, 351, 352, 353, 354, 355, 356, 529, 530, 531, 532, 533, 534, 535, 536, 537, 538, 539, 540, 541, 542, 543, 544, 545}
+    hats = {},
+    legs = {},
+    bags = {},
+    scarvesChains = {},
+    shirts = {},
+    bodyArmor = {},
+    jackets = {}
 }
 
 -- Helper function to check if a value is in a list
@@ -30,7 +30,7 @@ end
 local function notifyBlockedItem()
     lib.notify({
         title = "Blocked Item",
-        description = "You are not allowed to use emergency outfits. Your changes have been reverted.",
+        description = "You are not allowed to Buy these outfits. Your changes have been reverted.",
         type = "error",
         position = "bottom"
     })
